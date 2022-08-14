@@ -31,6 +31,7 @@ namespace Service
             return categoriesForReturn;
         }
 
+
         public async Task<CategoryDto> CreateCategoryAsync(CategoryForCreationDto category)
         {
             await CheckIfCategoryExistsAsync(category.Name);
@@ -51,6 +52,7 @@ namespace Service
         public async Task DeleteCategoryAsync(Guid id)
         {
             var categoryEntity = await GetCategoryAndCheckIfItExistsAsync(id, false);
+            categoryEntity.Subscriptions = await _repository.Subscription.GetSubscriptionsForCategoryAsync(id, false);
             _repository.Category.DeleteCategory(categoryEntity);
             await _repository.SaveAsync();
         }

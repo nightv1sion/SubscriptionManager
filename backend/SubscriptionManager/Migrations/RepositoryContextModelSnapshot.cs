@@ -44,7 +44,7 @@ namespace SubscriptionManager.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("SubscriptionId");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Created")
@@ -71,8 +71,7 @@ namespace SubscriptionManager.Migrations
                     b.HasOne("Entities.Models.Category", "Category")
                         .WithMany("Subscriptions")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Category");
                 });

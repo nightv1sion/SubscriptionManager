@@ -18,7 +18,7 @@ namespace Service
         public ServiceManager(IRepositoryManager repository, IMapper mapper)
         {
             _categoryService = new Lazy<ICategoryService>(() => new CategoryService(repository, mapper));   
-            _subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repository));
+            _subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repository, mapper));
         }
 
         public ICategoryService CategoryService => _categoryService.Value;

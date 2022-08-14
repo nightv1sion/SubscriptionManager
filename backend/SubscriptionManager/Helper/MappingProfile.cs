@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.Models;
 using Shared.DataTransferObjects.Category;
+using Shared.DataTransferObjects.Subscription;
 
 namespace SubscriptionManager.Helper
 {
@@ -11,6 +12,10 @@ namespace SubscriptionManager.Helper
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<CategoryForCreationDto, Category>();
             CreateMap<CategoryForEditDto, Category>();
+
+            CreateMap<Subscription, SubscriptionDto>();
+            CreateMap<SubscriptionForCreateDto, Subscription>();
+            CreateMap<SubscriptionForEditDto, Subscription>();
         }
     }
 }

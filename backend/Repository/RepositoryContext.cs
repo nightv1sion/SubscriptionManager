@@ -15,6 +15,10 @@ namespace Repository
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Category>()
+                .HasMany(c => c.Subscriptions)
+                .WithOne(s => s.Category)
+                .OnDelete(DeleteBehavior.Cascade);
         }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Category> Categories { get; set; }

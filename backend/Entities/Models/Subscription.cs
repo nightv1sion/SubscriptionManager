@@ -18,6 +18,6 @@ namespace Entities.Models
         public DateTime Created { get; set; }
         public DateTime EndsAt { get; set; }
         public Category? Category { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid? CategoryId { get; set; }
     }
 }
