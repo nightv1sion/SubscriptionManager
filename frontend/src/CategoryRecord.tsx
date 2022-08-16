@@ -1,11 +1,11 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, ToggleButton } from "react-bootstrap";
 
 export default function CategoryRecord(props: categoryRecordProps){
     return <div>
                 <Container className = "ml-0">
                     <Row className = "mt-3">
                         <Col md = {8} style = {{"padding": "0"}}>
-                            <Button className = "w-100" variant = "outline-info" >
+                            <Button style = {props.style} className="w-100" variant="outline-info" onClick = {() => props.setSelectedCategory(props.index)}>
                                 {props.categoryName}
                             </Button>
                         </Col>
@@ -25,5 +25,7 @@ interface categoryRecordProps{
     categoryName: string;
     handleEditCategory: (index: number) => void;
     handleDeleteCategory: (index: number) => void;
+    setSelectedCategory: (index: number) => void;
     index: number;
+    style?: object;
 }

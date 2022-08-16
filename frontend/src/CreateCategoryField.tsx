@@ -29,7 +29,7 @@ export default function CreateCategoryField(props: createCategoryFieldProps){
         <div>
             {isInputVisible ? <div> 
                     <input autoFocus onBlur = {() => handleBlurInput()} onChange = {handleNewCategoryHandle} className = "form-control" onKeyPress = {handleKeyPress} /> <Button type="submit" style =  {{"display": "none"}} ></Button></div>
-                    : <Button className = "w-100" variant = "secondary" onClick={() => setIsInputVisible(true)}>
+                    : <Button className = "w-100" variant = "outline-primary" onClick={() => setIsInputVisible(true)}>
                         Create Category
                     </Button>
             }
