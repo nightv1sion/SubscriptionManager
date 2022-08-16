@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Shared.DataTransferObjects.Subscription
 {
-    public record SubscriptionDto(Guid Id, string Name, decimal Price, DateTime Created, DateTime EndsAt, Guid? CategoryId);
+    public record SubscriptionDto(Guid Id, string Name, decimal Price, DateTime? Created, DateTime? EndsAt, Guid? CategoryId);
 }

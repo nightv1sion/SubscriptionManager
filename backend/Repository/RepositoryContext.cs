@@ -19,6 +19,7 @@ namespace Repository
                 .HasMany(c => c.Subscriptions)
                 .WithOne(s => s.Category)
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Category> Categories { get; set; }

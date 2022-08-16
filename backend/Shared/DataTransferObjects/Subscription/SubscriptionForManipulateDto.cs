@@ -13,10 +13,8 @@ namespace Shared.DataTransferObjects.Subscription
         public string? Name { get; init; }
         [Required(ErrorMessage = "Subcription Price is required")]
         public decimal Price { get; init; }
-        [Required(ErrorMessage = "Subscription Created time is required")]
-        public DateTime Created { get; init; }
-        [Required(ErrorMessage = "Subscription EndsAt time is required")]
-        public DateTime EndsAt { get; init; }
+        public DateTime? Created { get; init; }
+        public DateTime? EndsAt { get; init; }
         public Guid? CategoryId { get; set; }
     }
 }
