@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects.Subscription;
 
 namespace SubscriptionManager.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/subscriptions")]
     public class SubscriptionController : ControllerBase

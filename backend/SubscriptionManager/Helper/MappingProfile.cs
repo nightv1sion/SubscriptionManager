@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities.Models;
+using Shared.DataTransferObjects.Authentication;
 using Shared.DataTransferObjects.Category;
 using Shared.DataTransferObjects.Subscription;
 
@@ -16,6 +17,8 @@ namespace SubscriptionManager.Helper
             CreateMap<Subscription, SubscriptionDto>();
             CreateMap<SubscriptionForCreateDto, Subscription>();
             CreateMap<SubscriptionForEditDto, Subscription>();
+
+            CreateMap<UserForRegistrationDto, User>();
         }
     }
 }

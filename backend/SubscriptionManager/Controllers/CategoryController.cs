@@ -1,4 +1,5 @@
 ﻿using Filters.ActionFilters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Repository;
 using Service.Contracts;
@@ -6,6 +7,7 @@ using Shared.DataTransferObjects.Category;
 
 namespace SubscriptionManager.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/categories")]
     public class CategoryController : ControllerBase

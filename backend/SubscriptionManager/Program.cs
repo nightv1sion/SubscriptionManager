@@ -21,6 +21,8 @@ builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.ConfigureValidationActionFilter();
 builder.Services.ConfigureCors();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJWT(builder.Configuration);
 
 var app = builder.Build();
 var logger = app.Services.GetRequiredService<ILoggerManager>();
@@ -37,6 +39,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("CorsPolicy");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
