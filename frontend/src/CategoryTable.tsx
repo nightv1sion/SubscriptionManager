@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import CategoryRecord from "./CategoryRecord";
@@ -20,10 +21,10 @@ export default function CategoryTable(props: categoryTableProps){
         const uri = process.env.REACT_APP_API + "categories";
     
         try {
-            const response = await fetch(uri, { method: "GET", headers: {} })
-            if(!response.ok)
+            const response = await axios.get(uri);
+            if(response.status != 200)
                 throw new Error("Something went wrong when loading categories from server");
-            let data = await response.json();
+            let data = await response.data;
             
             setCategories(data);
     

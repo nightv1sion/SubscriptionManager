@@ -6,9 +6,17 @@ import { Col, Row } from 'react-bootstrap';
 import CategoryTable from './CategoryTable';
 import { Container } from 'react-bootstrap';
 import { Category, Subscription, SubscriptionDto } from './Interfaces';
+import Header from './Header';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import AuthPage from './AuthPage';
+import { setAuthToken } from './Authentication';
 
 function App() {
 
+  const token = localStorage.getItem("token");
+  if(token)
+    setAuthToken(token);
 
   const [selectedCategory, setSelectedCategory] = useState<Category | undefined>(undefined);
 
@@ -17,12 +25,18 @@ function App() {
   }
 
   return (
-      <Container fluid>
-        <Row>
-          <Col sm={9}><SubscriptionTable category = {selectedCategory ? selectedCategory : undefined}/></Col>
-          <Col sm={3}><CategoryTable setSelectedCategory = {selectCategory} /></Col>
-        </Row>
-      </Container>
+    <>
+    <BrowserRouter >
+      <Header />
+      <Routes>
+        <Route path = "/" element = {<Home selectedCategory = {selectedCategory} selectCategory = {selectCategory}/>}>
+        </Route>
+        <Route path = "/login" element = {<AuthPage />}>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+    
+    </>
   );
 }
 

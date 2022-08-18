@@ -36,3 +36,15 @@ export interface SubscriptionForEditDto {
     endsAt?: Date;
     categoryId?: string;
 }
+
+export interface UserForLoginDto {
+    username: string;
+    password: string;
+}
+
+export interface UserForRegisterDto {
+    username: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
