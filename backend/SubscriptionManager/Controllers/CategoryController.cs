@@ -21,14 +21,14 @@ namespace SubscriptionManager.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCategories()
         {
-            var categoriesForReturn = await _service.CategoryService.GetCategoriesAsync(false);
+            var categoriesForReturn = await _service.CategoryService.GetCategoriesForUserAsync(User.Identity.Name, false);
             return Ok(categoriesForReturn);
         }
 
         [HttpGet("{id:guid}", Name = "GetCategoryById")]
         public async Task<IActionResult> GetCategory(Guid id)
         {
-            var category = await _service.CategoryService.GetCategoryAsync(id, false);
+            var category = await _service.CategoryService.GetCategoryForUserAsync(User.Identity.Name, id, false);
             return Ok(category);
         }
 
@@ -36,21 +36,21 @@ namespace SubscriptionManager.Controllers
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCategory(CategoryForCreationDto category)
         {
-            var categoryForReturn = await _service.CategoryService.CreateCategoryAsync(category);
+            var categoryForReturn = await _service.CategoryService.CreateCategoryForUserAsync(User.Identity.Name,category);
             return CreatedAtRoute("GetCategoryById", new { id = categoryForReturn.Id }, categoryForReturn);
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
-            await _service.CategoryService.DeleteCategoryAsync(id);
+            await _service.CategoryService.DeleteCategoryForUserAsync(User.Identity.Name, id);
             return NoContent();
         }
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> EditCategory(Guid id, CategoryForEditDto category)
         {
-            await _service.CategoryService.EditCategoryAsync(id, category);
+            await _service.CategoryService.EditCategoryForUserAsync(User.Identity.Name, id, category);
             return NoContent();
         }
     }

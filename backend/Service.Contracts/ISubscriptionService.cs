@@ -9,11 +9,11 @@ namespace Service.Contracts
 {
     public interface ISubscriptionService
     {
-        Task<IEnumerable<SubscriptionDto>> GetSubscriptionsAsync(bool trackChanges);
-        Task<IEnumerable<SubscriptionDto>> GetSubscriptionsForCategoryAsync(Guid categoryId, bool trackChanges);
-        Task<SubscriptionDto> CreateSubscriptionAsync(SubscriptionForCreateDto subcriptionForCreate);
-        Task<SubscriptionDto> GetSubscriptionByIdAsync(Guid id, bool trackChanges);
-        Task DeleteSubscriptionAsync(Guid id);
-        Task EditSubscriptionAsync(Guid id, SubscriptionForEditDto subscriptionForEdit);
+        Task<IEnumerable<SubscriptionDto>> GetSubscriptionsForUserAsync(string username, bool trackChanges);
+        Task<IEnumerable<SubscriptionDto>> GetSubscriptionsForCategoryForUserAsync(string username, Guid categoryId, bool trackChanges);
+        Task<SubscriptionDto> CreateSubscriptionForUserAsync(string username, SubscriptionForCreateDto subcriptionForCreate);
+        Task<SubscriptionDto> GetSubscriptionByIdForUserAsync(string username, Guid id, bool trackChanges);
+        Task DeleteSubscriptionForUserAsync(string username, Guid id);
+        Task EditSubscriptionForUserAsync(string username, Guid id, SubscriptionForEditDto subscriptionForEdit);
     }
 }

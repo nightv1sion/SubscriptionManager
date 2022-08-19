@@ -1,4 +1,5 @@
 ﻿using Filters.ActionFilters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 using Shared.DataTransferObjects.Authentication;
@@ -15,12 +16,12 @@ namespace SubscriptionManager.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
         {
             var result = await _service.AuthenticationService.RegisterUser(userForRegistration);
-            if (!result.Succeeded)
+             if (!result.Succeeded)
             {
                 foreach(var error in result.Errors)
                 {
@@ -39,6 +40,6 @@ namespace SubscriptionManager.Controllers
                 return Unauthorized();
 
             return Ok(new { Token = await _service.AuthenticationService.CreateToken() });
-        } 
+        }
     }
 }

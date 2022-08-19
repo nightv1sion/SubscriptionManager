@@ -21,8 +21,8 @@ namespace Service
 
         public ServiceManager(IRepositoryManager repository, IMapper mapper, UserManager<User> userManager, IConfiguration configuration)
         {
-            _categoryService = new Lazy<ICategoryService>(() => new CategoryService(repository, mapper));   
-            _subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repository, mapper));
+            _categoryService = new Lazy<ICategoryService>(() => new CategoryService(repository, mapper, userManager));   
+            _subscriptionService = new Lazy<ISubscriptionService>(() => new SubscriptionService(repository, mapper, userManager));
             _authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(mapper, userManager, configuration));
         }
 
