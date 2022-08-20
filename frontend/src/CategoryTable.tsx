@@ -37,36 +37,51 @@ export default function CategoryTable(props: categoryTableProps){
     const PostNewCategory = async () => {
         const uri = process.env.REACT_APP_API + "categories";
         try {
-            const response = await fetch(uri, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify({name: nameOfNewCategory})});
-            if(!response.ok)
+            const response = await axios.post(uri, {name: nameOfNewCategory});
+            if(response.status != 201)
                 throw new Error("Something went wrong when posting new category to server");
             }
             catch(error:any){
-            console.log(error.message);
+                if(error.request)
+                    console.log(error.request)
+                if(error.response)
+                    console.log(error.response);
+                if(error.message)
+                    console.log(error.message);
         }
     }
 
     const updateData = async (name: string, index: number) => {
         const uri = process.env.REACT_APP_API + "categories/" + categories[index].id;
         try {
-            const response = await fetch(uri, {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify({id: categories[index].id, name: name})});
-            if(!response.ok)
+            const response = await axios.put(uri, {id: categories[index].id, name: name});
+            if(response.status != 204)
                 throw new Error("Something went wrong when editing category");
         }
         catch(error: any){
-            console.log(error.message);
+            if(error.request)
+                    console.log(error.request)
+                if(error.response)
+                    console.log(error.response);
+                if(error.message)
+                    console.log(error.message);
         }
     } 
 
     const DeleteData = async (index: number) => {
         const uri = process.env.REACT_APP_API + "categories/" + categories[index].id;
         try {
-            const response = await fetch(uri, {method: "DELETE", headers: {}});
-            if(!response.ok)
+            const response = await axios.delete(uri);
+            if(response.status != 204)
                 throw new Error("Something went wrong when deleting category");
         }
         catch(error: any){
-            console.log(error.message);
+            if(error.request)
+                    console.log(error.request)
+                if(error.response)
+                    console.log(error.response);
+                if(error.message)
+                    console.log(error.message);
         }
     }
 
@@ -105,6 +120,7 @@ export default function CategoryTable(props: categoryTableProps){
 
     const handleDeleteCategory = async (index:number) => {
         await DeleteData(index);
+        selectCategory(-1);
         await getDataCategories();
     }    
 
@@ -129,9 +145,6 @@ export default function CategoryTable(props: categoryTableProps){
 
     return <>
         <h3 style = {{"marginLeft": "20%"}}>Categories</h3>
-        {/* <div className = "m-auto w-100">
-            <SearchField style = {{"width" : "67%"}}/>
-        </div> */}
         <div className = "w-100 m-auto text-center" style = {{"height": "500px"}}>
             <div className = "">
                 {categories.map((c, index) => 

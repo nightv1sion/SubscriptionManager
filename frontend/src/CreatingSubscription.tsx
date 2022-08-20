@@ -4,6 +4,7 @@ import './CreatingSubscription.css';
 import * as Yup from "yup";
 import React, { useState } from "react";
 import { Category, SubscriptionForCreateDto } from "./Interfaces";
+import axios from "axios";
 export default function CreatingSubscription(props: creatingSubscriptionProps){
     
     const initialValues:SubscriptionForCreateDto = {name: "", price: 0, created: undefined, endsAt: undefined};
@@ -13,13 +14,18 @@ export default function CreatingSubscription(props: creatingSubscriptionProps){
         if(props.category)
             subscription.categoryId = props.category.id;
         try {
-            const response = await fetch(uri, {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(subscription)});
-            if(!response.ok)
+            const response = await axios.post(uri, subscription);
+            if(response.status != 201)
                 throw new Error("Something went wrong when creating a new subscription");
             
         }
-        catch(err: any){
-            console.log(err.message);
+        catch(error: any){
+            if(error.request)
+                console.log(error.request)
+            if(error.response)
+                console.log(error.response);
+            if(error.message)
+                console.log(error.message);
         }
     }
 

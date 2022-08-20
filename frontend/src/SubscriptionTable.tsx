@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Category, Subscription, SubscriptionDto } from "./Interfaces";
 import SubscriptionRecord from "./SubscriptionRecord";
 import CreatingSubscription from "./CreatingSubscription";
+import axios from "axios";
 
 export default function SubscriptionTable(props: taskTableProps){
     
@@ -33,14 +34,19 @@ export default function SubscriptionTable(props: taskTableProps){
         else
           uri += "subscriptions";
         try {
-          const response = await fetch(uri, {method: "GET", headers: {}});
-          if(!response.ok)
+          const response = await axios.get(uri);
+          if(response.status != 200)
             throw new Error("Something went wrong when getting subscriptions from server");
-          let data:SubscriptionDto[] = await response.json();
+          let data:SubscriptionDto[] = await response.data;
           setSubscriptions(dtoToSubscriptions(data));
         }
-        catch(err:any) {
-          console.log(err.message);
+        catch(error:any) {
+          if(error.request)
+              console.log(error.request)
+          if(error.response)
+              console.log(error.response);
+          if(error.message)
+              console.log(error.message);
         }
     }
 

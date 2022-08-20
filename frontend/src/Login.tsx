@@ -1,11 +1,37 @@
-import { useFormik } from "formik";
+import axios from "axios";
+import { ErrorMessage, useFormik } from "formik";
 import { Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { UserForLoginDto } from "./Interfaces";
+import { useState } from "react";
+import { setAuthToken } from "./Authentication";
+import { useNavigate } from "react-router-dom";
 export default function Login(props: loginProps){
     
+    const navigate = useNavigate();
+    
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
+
+    const loginUser = async (user: UserForLoginDto) => {
+        const uri = process.env.REACT_APP_API + "authentication/login";
+        try {
+            const response = await axios.post(uri, user);
+            if(response.status != 200)
+                throw new Error("Something went wrong when user authorizing");
+            const token = response.data.token;
+            localStorage.setItem("token", token);
+            setAuthToken(token);
+            navigate("/");
+        }
+        catch(err:any){
+            const errors:string[] = [];
+            errors.push("Login or Password is wrong");
+            setErrorMessages(errors);
+        }
+    }
+
     const handleFormikSubmit = async (values: UserForLoginDto) => {
-        await props.handleLogin(values);
+        await loginUser(values);
     }
     
     const formik = useFormik({initialValues: {username: "", password: ""}, onSubmit: handleFormikSubmit, 
@@ -19,6 +45,7 @@ export default function Login(props: loginProps){
             <div className = "text-center">
                 <h3>Login</h3>
             </div>
+            {errorMessages.length != 0 ? errorMessages.map((error, index) => <div key = {index} className = "text-center text-danger">{error}</div>) : <></>}
             {formik.errors.username ? <label htmlFor="username" className = "text-danger">Username is required</label> : <label htmlFor = "username">Username</label>} 
             <input id="username" name = "username" value={formik.values.username} onChange = {formik.handleChange} className = "form-control"/>
 
@@ -37,5 +64,4 @@ export default function Login(props: loginProps){
 }
 interface loginProps {
     switchForm: () => void;
-    handleLogin: (user: UserForLoginDto) => void;
 }

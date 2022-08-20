@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { Container, Row, Col, Button } from "react-bootstrap";
@@ -9,12 +10,17 @@ export default function SubscriptionRecord(props: subscriptionRecordProps){
     const DeleteSubscription = async () => {
         const uri = process.env.REACT_APP_API + "subscriptions/" + props.subscription.id;
         try {
-            const response = await fetch(uri, {method: "DELETE", headers: {}});
-            if(!response.ok)
+            const response = await axios.delete(uri);
+            if(response.status != 204)
                 throw new Error("Something went wrong when deleting subscription");
         }
-        catch(err:any) {
-            console.log(err.message);
+        catch(error:any) {
+            if(error.request)
+                console.log(error.request)
+            if(error.response)
+                console.log(error.response);
+            if(error.message)
+                console.log(error.message);
         }
     }
 

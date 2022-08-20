@@ -1,12 +1,49 @@
+import axios from "axios";
 import { useFormik } from "formik";
 import { Button } from "react-bootstrap";
 import * as Yup from "yup";
 import { UserForRegisterDto } from "./Interfaces";
+import { useState } from "react";
 
 export default function Register(props: registerProps){
 
-    const handleFormikSubmit = (values: UserForRegisterDto) => {
-        props.handleRegister(values);
+    const [errorMessages, setErrorMessages] = useState<string[]>([]);
+
+    const registerUser = async (user: UserForRegisterDto) => {
+        const uri = process.env.REACT_APP_API + "authentication/register";
+        try {
+            const response = await axios.post(uri, user);
+            if(response.status != 201)
+                throw new Error("Something went wrong when registrating the user");
+            props.switchForm();
+        }
+        catch(err: any){
+            if(err.request){
+                const response = JSON.parse(err.request.response);
+                const errors:string[] = [];
+                if(response["DuplicateEmail"])
+                    errors.push(response["DuplicateEmail"][0]);
+                if(response["DuplicateUserName"])
+                    errors.push(response["DuplicateUserName"][0]);
+                if(response["PasswordTooShort"])
+                    errors.push(response["PasswordTooShort"][0]);
+                if(response["PasswordRequiresNonAlphanumeric"])
+                    errors.push(response["PasswordRequiresNonAlphanumeric"][0]);
+                setErrorMessages(errors)
+            }
+            else if(err.response){
+                console.log("response:");
+                console.log(err.response);
+            }
+            else if(err.message){
+                console.log("message:");
+                console.log(err.message);
+            }
+        }
+    }
+
+    const handleFormikSubmit = async (values: UserForRegisterDto) => {
+        await registerUser(values);
     }
 
     const formik = useFormik({initialValues: {username: "", email: "", password: "", confirmPassword: ""}, validationSchema: Yup.object().shape({
@@ -22,6 +59,7 @@ export default function Register(props: registerProps){
             <div className = "text-center">
                 <h3>Register</h3>
             </div>
+            {errorMessages.length > 0 ? errorMessages.map((error, index) => <div key={index} className = "text-danger text-center">{error}</div>) : <></>}
             {formik.errors.username ? <label htmlFor = "username" className = "text-danger">Username is required</label> : <label htmlFor = "username">Username</label> }
             <input id = "username" name = "username" value = {formik.values.username} onChange = {formik.handleChange} className = "form-control"/>
 
@@ -46,5 +84,4 @@ export default function Register(props: registerProps){
 
 interface registerProps{
     switchForm: () => void;
-    handleRegister: (user: UserForRegisterDto) => void;
 }

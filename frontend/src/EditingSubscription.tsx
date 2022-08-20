@@ -2,6 +2,7 @@ import { Subscription, SubscriptionForEditDto } from "./Interfaces"
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { Button } from "react-bootstrap";
+import axios from "axios";
 export default function EditingCategory(props: editingCategoryProps){
     
 
@@ -9,13 +10,18 @@ export default function EditingCategory(props: editingCategoryProps){
         const uri = process.env.REACT_APP_API + "subscriptions/" + props.subscription.id;
         console.log(values);
         try {
-            const response = await fetch(uri, {method: "PUT", headers: {"Content-Type": "application/json"}, body: JSON.stringify(values)});
-            if(!response.ok)
+            const response = await axios.put(uri, values);
+            if(response.status != 204)
                 throw new Error("Something when wrong when updating subscription");
         }
-        catch(err:any){
-            console.log(err.message);
-        }
+        catch(error:any){
+            if(error.request)
+                console.log(error.request)
+            if(error.response)
+                console.log(error.response);
+            if(error.message)
+                console.log(error.message);
+    }
     }
 
     const initialValues:SubscriptionForEditDto = { name: props.subscription.name, price: props.subscription.price, 
