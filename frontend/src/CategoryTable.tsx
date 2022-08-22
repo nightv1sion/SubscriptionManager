@@ -2,10 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import CategoryRecord from "./CategoryRecord";
-import CreateCategoryField from "./CreateCategoryField";
 import EditingCategory from "./EditingCategory";
 import { Category } from "./Interfaces";
-import SearchField from "./SearchField";
+import NewCategoryRecord from "./NewCategoryRecord";
+import "./styles/CategoryTable.css";
+import FieldForCreation from "./FieldForCreation";
 
 export default function CategoryTable(props: categoryTableProps){
     
@@ -144,32 +145,28 @@ export default function CategoryTable(props: categoryTableProps){
     }, []);
 
     return <>
-        <h3 style = {{"marginLeft": "20%"}}>Categories</h3>
-        <div className = "w-100 m-auto text-center" style = {{"height": "500px"}}>
+        <div>
+            <FieldForCreation placeholder = {"Add a new category"} handleCreation={handleCreateCategory} handleText={handleCategoryText} breakCreation = {breakCreatingCategory}/>
+        </div>
+        <div className = "category--table">
             <div className = "">
                 {categories.map((c, index) => 
                     isCategoryEditing[index] ? <EditingCategory key = {index} confirmEdit={confirmEditCategory} name = {c.name} index = {index} breakEditing = {breakEditCategory}/> 
                     : isCategorySelected[index] == true ? 
-                        <CategoryRecord style = {{backgroundColor: "#17a2b8", color: "white"}} setSelectedCategory={selectCategory} key = {index} index = {index} categoryName = {c.name} handleEditCategory = {handleEditCategory} handleDeleteCategory = {handleDeleteCategory}/>
+                        <CategoryRecord isSelected = {true} setSelectedCategory={selectCategory} key = {index} index = {index} categoryName = {c.name} handleEditCategory = {handleEditCategory} handleDeleteCategory = {handleDeleteCategory}/>
                         : <CategoryRecord setSelectedCategory={selectCategory} key = {index} index = {index} categoryName = {c.name} handleEditCategory = {handleEditCategory} handleDeleteCategory = {handleDeleteCategory}/> 
                 )}
             </div>
             
-            <div style = {{"margin": "5% 0 0 0", "textAlign": "start"}}>
-                {isCategorySelected.findIndex(c => c == true) == -1 ?  <Button  style = {{"width" : "67%", backgroundColor: "#ffc107", color: "white"}} variant = "outline-warning" onClick = {() => selectCategory(-1)}>
-                    All subscriptions
-                </Button> :  <Button  style = {{"width" : "67%"}} variant = "outline-warning" onClick = {() => selectCategory(-1)}>
-                    All subscriptions
-                </Button> }
+            <div>
+                {isCategorySelected.findIndex(c => c == true) == -1 ?  
+                    <CategoryRecord isSelected = {true} setSelectedCategory={() => selectCategory(-1)} index = {-1} categoryName = {"Uncategorized"}/> : <CategoryRecord setSelectedCategory={() => selectCategory(-1)} index = {-1} categoryName = {"Uncategorized"}/>
+                }
                 
             </div>
-            
-            { nameOfNewCategory ? <div style={{"margin": "5% 0 0 0", "textAlign": "start"}}><Button style = {{"width" : "67%"}} variant = "outline-success">{nameOfNewCategory}</Button></div> : <></>}
-            
+            { nameOfNewCategory ? <NewCategoryRecord categoryName={nameOfNewCategory} /> : <></>}
         </div>
-        <div style={{"width": "68%"}}>
-            <CreateCategoryField handleCreateCategory={handleCreateCategory} handleNewCategoryText={handleCategoryText} breakCreatingCategory = {breakCreatingCategory}/>
-        </div>
+        
     </>
 }
 

@@ -1,0 +1,76 @@
+.subscription--record--completedtitle {
+    width: 80%;
+    margin: auto;
+    display: flex;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: rgba(0,0,0,60%);
+}
+
+.line {
+    border: 1px solid rgba(0,0,0,60%);
+    height: 1px;
+    margin-top: 18px;
+    margin-left: 1%;
+    flex: 90%;
+}
+
+.accordion-button {
+    width: 80%;
+    margin: auto;
+    font-size: 24px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: rgba(0,0,0,1%);
+}
+
+.accordion-body {
+    background-color: rgba(0,0,0,5%);
+}
+
+.accordion-header{
+    background-color: rgba(0,0,0,5%);
+}
+
+.accordion {
+    margin-top: 2%;
+}
+
+.subscriptiontable--fieldforcreation{
+    width: 80%;
+    margin: auto;
+}
+
+.empty--image {
+    width: 50%;
+    margin-top: 10%;
+}
+
+.empty--image--div {
+    width: 30%;
+    margin: auto;
+    text-align: center;
+}
+
+.empty--text{
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.subscription--table{
+    overflow: auto;
+    height: 700px;
+}
+
+.subscription--table::-webkit-scrollbar {
+    width: 10px;
+}
+  
+.subscription--table::-webkit-scrollbar-track {
+    -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
+    background-color: #f9f9fd;
+    border-radius: 10px;
+}

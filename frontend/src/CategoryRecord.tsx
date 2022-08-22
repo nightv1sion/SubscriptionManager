@@ -1,31 +1,33 @@
 import { Button, Col, Container, Row, ToggleButton } from "react-bootstrap";
-
+import "./styles/CategoryRecord.css";
 export default function CategoryRecord(props: categoryRecordProps){
-    return <div>
-                <Container className = "ml-0">
-                    <Row className = "mt-3">
-                        <Col md = {8} style = {{"padding": "0"}}>
-                            <Button style = {props.style} className="w-100" variant="outline-info" onClick = {() => props.setSelectedCategory(props.index)}>
-                                {props.categoryName}
-                            </Button>
-                        </Col>
-                        <Col md = {2} style = {{"padding": "0", "margin": "0"}} className = "text-center" >
-                            <Button style = {{"margin": "0"}} variant = "outline-dark" onClick = {() => props.handleEditCategory(props.index)}>&#128393;</Button>
-                        </Col>
-                        <Col md = {2} style = {{"padding": "0"}} className = "text-center">
-                            <Button style = {{"marginRight": "45%"}}variant = "outline-danger" onClick = {() => props.handleDeleteCategory(props.index)}>&#10006;</Button>    
-                        </Col>
-                    </Row>
-                </Container>
-                
-    </div>
+    
+    return <>
+    {props.isSelected == true ? ( 
+            <div className = "categoryrecord--box selected--category">
+                <a href = "#" onClick = {(event) => { event.preventDefault(); props.setSelectedCategory(props.index) }}>
+                    <div className = "category--name">
+                        <p>{props.categoryName}</p>
+                    </div>
+                </a>
+            </div>) : (
+                <div className = "categoryrecord--box">
+                    <a href = "#" onClick = {(event) => { event.preventDefault(); props.setSelectedCategory(props.index) }}>
+                        <div className = "category--name">
+                            <p>{props.categoryName}</p>
+                        </div>
+                    </a>
+                </div>
+            )
+    }
+    </>
 }
 
 interface categoryRecordProps{
     categoryName: string;
-    handleEditCategory: (index: number) => void;
-    handleDeleteCategory: (index: number) => void;
+    handleEditCategory?: (index: number) => void;
+    handleDeleteCategory?: (index: number) => void;
     setSelectedCategory: (index: number) => void;
     index: number;
-    style?: object;
+    isSelected?: boolean;
 }

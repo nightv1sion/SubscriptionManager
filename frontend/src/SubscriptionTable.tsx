@@ -1,15 +1,15 @@
-import { Button, Modal } from "react-bootstrap";
+import { Button, Container, Row, Col, Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { Category, Subscription, SubscriptionDto } from "./Interfaces";
 import SubscriptionRecord from "./SubscriptionRecord";
 import CreatingSubscription from "./CreatingSubscription";
 import axios from "axios";
-
+import FieldForCreation from "./FieldForCreation";
+import "./styles/SubscriptionTable.css";
+import "./styles/SubscriptionRecord.css";
 export default function SubscriptionTable(props: taskTableProps){
     
-    const [showFormForCreating, setShowFormForCreating] = useState<boolean>(false);
-    
-    const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+    const [nameOfNewSubscription, setNameOfNewSubscription] = useState<string | undefined>();
 
     const stringToDate = (date: string) => {
         if(date.includes("0001"))
@@ -17,28 +17,16 @@ export default function SubscriptionTable(props: taskTableProps){
         let dateForReturn = new Date(date);
         return dateForReturn;
     }
-    
-      const dtoToSubscriptions = (dtos: SubscriptionDto[]) => {
-        let subscriptions:Subscription[] = []; 
-        for(let i = 0; i < dtos.length; i++){
-          subscriptions.push({id: dtos[i].id, name: dtos[i].name, price: dtos[i].price, 
-                              created: stringToDate(dtos[i].created), endsAt: stringToDate(dtos[i].endsAt), categoryId: dtos[i].categoryId});
-        }
-        return subscriptions;
-    }
 
-    const getDataSubscriptions = async () => {
-        let uri:string = "" + process.env.REACT_APP_API;
+    const PostNewSubscription = async () => {
+        let uri:string = "" + process.env.REACT_APP_API + "subscriptions";
+        let values = {name: nameOfNewSubscription, categoryId: props.category ? props.category.id : undefined};
         if(props.category)
-          uri += "categories/" + props.category.id + "/subscriptions";
-        else
-          uri += "subscriptions";
         try {
-          const response = await axios.get(uri);
-          if(response.status != 200)
+          const response = await axios.post(uri, values);
+          if(response.status != 201)
             throw new Error("Something went wrong when getting subscriptions from server");
           let data:SubscriptionDto[] = await response.data;
-          setSubscriptions(dtoToSubscriptions(data));
         }
         catch(error:any) {
           if(error.request)
@@ -50,43 +38,82 @@ export default function SubscriptionTable(props: taskTableProps){
         }
     }
 
+    
+    const handleCreate = async () => {
+        await PostNewSubscription();
+        setNameOfNewSubscription(undefined);
+        await props.getDataSubscriptions();
+    }
+
+    const breakCreation = () => {
+        setNameOfNewSubscription(undefined);
+    }
+
 
     useEffect( () => { 
-        const fetchData = async () => { await getDataSubscriptions() };
+        const fetchData = async () => { await props.getDataSubscriptions() };
         fetchData();
      }, [props.category]);
     
-    const handleOpenForm = () => {
-        setShowFormForCreating(true);
-    }
-
-    const handleCloseForm = () => {
-        setShowFormForCreating(false);
-    }
+    const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
     
     return <>
-        <h3 style = {{"marginLeft": "40%"}}>Subscriptions ({props.category ? props.category.name : "All subscriptions"})</h3>
-        <div style = {{height: "500px"}}>
-        {subscriptions.map((value, index) => {
-            return <SubscriptionRecord key = {index} subscription = {value} getData = {getDataSubscriptions}/>
-        })}
+    <div className = "subscription--table">
+
+        <div className = "subscriptiontable--fieldforcreation">
+        <FieldForCreation placeholder = {"Add a new subscription"} style = {{margin: "1% 1% 1% 1%"}} handleText={(value: string) => { setNameOfNewSubscription(value); } } handleCreation={handleCreate} breakCreation={breakCreation}/>
+        </div>
+        
+        {nameOfNewSubscription ? <div className = "subscriptiontable--newsubscription">
+            <div className = "subscription--record">
+                <Container>
+                    <Row>
+                        <Col sm={2}></Col>
+                        <Col sm={8}>
+                            <div className = "subscription--info">
+                                <div className = "subscription--name">{nameOfNewSubscription}</div>
+                            </div>
+                        </Col>
+                        <Col sm={2}></Col>
+                    </Row>
+                </Container>     
+            </div> 
+        </div> : <></>}
+        
+        {props.subscriptions.length > 0 ? <div>
+            {props.subscriptions.filter(s => s.endsAt == undefined || s.endsAt > new Date()).map((value, index) => {
+                return <SubscriptionRecord index = {index} selectedSubscription={props.selectedSubscription && props.selectedSubscription == value ? true : false} setSelectedSubscription = {(subscription: Subscription | undefined) => {props.setSelectedSubscription(subscription);}} key = {index} subscription = {value} getData = {props.getDataSubscriptions}/>
+            })}
+        </div> : <div className="empty--image--div"><img src = "empty.png" className = "empty--image"/><div className = "empty--text">It is empty</div></div>}
 
         
+        
+        
+        {props.subscriptions.filter(s => s.endsAt != undefined && s.endsAt < new Date()).length > 0 ? <div className="accordion accordion-flush" id="accordionFlushExample">
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="flush-headingOne">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Completed
+                    </button>
+                    </h2>
+                    <div id="flush-collapseOne" className="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                    <div className="accordion-body">
+                    {props.subscriptions.filter(s => s.endsAt != undefined && s.endsAt < new Date()).map((value, index) => {
+                        return <SubscriptionRecord index = {index} selectedSubscription={props.selectedSubscription == value ? true : false} setSelectedSubscription = {(subscription: Subscription | undefined) => { props.setSelectedSubscription(subscription); } }  key = {index} subscription = {value} getData = {props.getDataSubscriptions}/>
+                    })}
+                    </div>
+            </div>
         </div>
-        { showFormForCreating ? <Modal show = {showFormForCreating} onHide = {handleCloseForm}>
-                <Modal.Header>
-                    <Modal.Title>New Subscription</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <CreatingSubscription category={props.category} closeForm={handleCloseForm} getData = {getDataSubscriptions} />
-                </Modal.Body>
-            </Modal>: <></>}
-        <div style = {{margin: "auto", width: "25%"}}>
-            <Button variant = "outline-primary" onClick = {handleOpenForm}>Create Subscription</Button>
-        </div>
-    </>
+        </div> : <></>}
+    </div>
+        
+</>
 }
 
 interface taskTableProps {
     category?: Category;
+    setSelectedSubscription: (subscription: Subscription | undefined) => void;
+    selectedSubscription: Subscription | undefined;
+    subscriptions: Subscription[];
+    getDataSubscriptions: () => void;
 }

@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { Button } from "react-bootstrap";
-import './CreatingSubscription.css';
+import './styles/CreatingSubscription.css';
 import * as Yup from "yup";
 import React, { useState } from "react";
 import { Category, SubscriptionForCreateDto } from "./Interfaces";

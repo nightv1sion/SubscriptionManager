@@ -1,0 +1,24 @@
+.col-sm-3 {
+    padding: 0;
+}
+
+.main--box{
+    /* min-height: 100%;
+    height: 100%; */
+}
+
+.main--category--table {
+    /* min-height: 100%; */
+    /* height: 100%; */
+    border-right: 1px solid #7E73F5;
+}
+
+.main--leftside {
+    /* height: 100vh; */
+    border-right: 1px solid rgba(0, 0, 0, 20%);
+}
+
+.main--maincontent {
+    background-color: rgba(0, 0, 0, 5%);
+}
+

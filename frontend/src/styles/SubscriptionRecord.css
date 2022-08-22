@@ -1,0 +1,74 @@
+.subscription--record{
+    width: 80%;
+    margin: auto;
+    border: 1px solid rgba(0,0,0,20%);
+    border-radius: 20px;
+    margin-top: 2%;
+    background-color: white;
+}
+
+.subscription--record {
+    min-height: 100px;
+    height: 100px;
+}
+
+.subscription--startdate {
+    border-right: 1px solid rgba(0,0,0,20%);
+    min-height: 100px;
+    height: 100%;
+    padding: 0;
+}
+
+.subscription--enddate{
+    border-left: 1px solid rgba(0,0,0,20%);
+    min-height: 100px;
+    height: 100%;
+    text-align: center;
+}
+
+
+.subscription--enddate-cont {
+    width: 100%;
+    margin: auto;
+    text-align:center;
+  
+}
+
+.subscription--startdate-cont{
+    text-align: center;
+}
+
+.subscription--additionalinfo{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.subscription--title{
+    color: rgba(0,0,0,50%);
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.subscription--date{
+    color: rgba(0,0,0,100%);
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.subscription--name {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.subscription--price{
+    font-size: 20px;
+    font-weight: 500;
+}
+.dollar {
+    font-weight: 700;
+    color: #067A18;
+}
+
+.subscription--selected--record {
+    background-color: rgba(0,0,0,20%); 
+} 

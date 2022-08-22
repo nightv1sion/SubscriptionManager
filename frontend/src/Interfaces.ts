@@ -32,8 +32,8 @@ export interface SubscriptionForCreateDto {
 export interface SubscriptionForEditDto {
     name: string;
     price: number;
-    created?: Date;
-    endsAt?: Date;
+    created?: string;
+    endsAt?: string;
     categoryId?: string;
 }
 
