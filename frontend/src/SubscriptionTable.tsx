@@ -11,6 +11,8 @@ export default function SubscriptionTable(props: taskTableProps){
     
     const [nameOfNewSubscription, setNameOfNewSubscription] = useState<string | undefined>();
 
+    const [nowCreated, setNowCreated] = useState<string | undefined>();
+
     const stringToDate = (date: string) => {
         if(date.includes("0001"))
           return undefined;
@@ -29,7 +31,10 @@ export default function SubscriptionTable(props: taskTableProps){
           const response = await axios.post(uri, values);
           if(response.status != 201)
             throw new Error("Something went wrong when getting subscriptions from server");
-          let data:SubscriptionDto[] = await response.data;
+          let data:SubscriptionDto = await response.data;
+          console.log(data);
+          return data.id.slice();
+          
         }
         catch(error:any) {
           if(error.request)
@@ -43,9 +48,13 @@ export default function SubscriptionTable(props: taskTableProps){
 
     
     const handleCreate = async () => {
-        await PostNewSubscription();
+        const data = await PostNewSubscription();
         setNameOfNewSubscription(undefined);
         await props.getDataSubscriptions();
+        if(data)
+        {
+            setNowCreated(data);
+        }
     }
 
     const breakCreation = () => {
@@ -57,6 +66,17 @@ export default function SubscriptionTable(props: taskTableProps){
         const fetchData = async () => { await props.getDataSubscriptions() };
         fetchData();
      }, [props.category]);
+
+    useEffect(() => {
+        if(nowCreated)
+        {
+            const sub = props.subscriptions.find(s => s.id == nowCreated); 
+            console.log("sub");
+            console.log(sub);
+            props.setSelectedSubscription(sub);
+            setNowCreated(undefined);
+        }
+     }, [props.subscriptions]);
     
     const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
     

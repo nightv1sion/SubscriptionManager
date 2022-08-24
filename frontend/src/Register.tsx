@@ -30,6 +30,8 @@ export default function Register(props: registerProps){
                     errors.push(response["PasswordTooShort"][0]);
                 if(response["PasswordRequiresNonAlphanumeric"])
                     errors.push(response["PasswordRequiresNonAlphanumeric"][0]);
+                errors.push("Password and Confirmed Password must be the same");
+                errors.push("Password must have one Uppercase letter, one LowerCase letter, one Number, one Non Alphanumeric symbol");
                 setErrorMessages(errors)
             }
             else if(err.response){
