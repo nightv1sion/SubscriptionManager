@@ -11028,3 +11028,29 @@
 2022-08-24 13:27:06.6021 Debug Logger LoggerService.LoggerManager [Warn] => logfile
 2022-08-24 13:27:06.6021 Debug Logger LoggerService.LoggerManager [Error] => logfile
 2022-08-24 13:27:06.6021 Debug Logger LoggerService.LoggerManager [Fatal] => logfile
+2022-08-24 14:29:55.2021 Info AppDomain Shutting down. LogFactory closing...
+2022-08-24 14:29:55.2199 Debug Stopping file watching for path 'C:\Users\Данила\Desktop\pet-projects\SubscriptionManager\backend\SubscriptionManager' filter 'nlog.config'
+2022-08-24 14:29:55.2276 Trace Flushing all 1 targets...
+2022-08-24 14:29:55.2379 Trace ForEachItemInParallel() 1 items
+2022-08-24 14:29:55.2379 Trace FileTarget(Name=logfile): FlushAsync
+2022-08-24 14:29:55.2379 Trace Continuation invoked: 
+2022-08-24 14:29:55.2516 Trace Parallel task completed. 0 items remaining
+2022-08-24 14:29:55.2516 Debug Flush completed
+2022-08-24 14:29:55.2516 Trace FileTarget(Name=logfile): FlushAsync Done
+2022-08-24 14:29:55.2516 Debug Targets not configured for Logger: LoggerService.LoggerManager
+2022-08-24 14:29:55.2675 Debug Closing logging configuration...
+2022-08-24 14:29:55.2675 Trace Closing FileTarget(Name=logfile)
+2022-08-24 14:29:55.2675 Debug FileTarget(Name=logfile): Closing...
+2022-08-24 14:29:55.2675 Debug FileTarget(Name=logfile): Closed.
+2022-08-24 14:29:55.2835 Trace Closing .\logs\${shortdate}_logfile.txt
+2022-08-24 14:29:55.2835 Trace Closing Layout Renderer: ${literal}
+2022-08-24 14:29:55.2835 Trace Closing Layout Renderer: ${shortdate}
+2022-08-24 14:29:55.2835 Trace Closing Layout Renderer: ${literal}
+2022-08-24 14:29:55.2835 Trace Closing ${longdate} ${level:uppercase=true} ${message}
+2022-08-24 14:29:55.2835 Trace Closing Layout Renderer: ${longdate}
+2022-08-24 14:29:55.2835 Trace Closing Layout Renderer: ${literal}
+2022-08-24 14:29:55.2835 Trace Closing Layout Renderer: ${level}
+2022-08-24 14:29:55.2990 Trace Closing Layout Renderer: ${literal}
+2022-08-24 14:29:55.2990 Trace Closing Layout Renderer: ${message}
+2022-08-24 14:29:55.2990 Debug Finished closing logging configuration.
+2022-08-24 14:29:55.2990 Info LogFactory has been closed.
