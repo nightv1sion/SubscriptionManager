@@ -10,9 +10,10 @@ export default function Register(props: registerProps){
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     const registerUser = async (user: UserForRegisterDto) => {
-        const uri = process.env.REACT_APP_API + "authentication/register";
+        const baseUrl: string = "" + process.env.REACT_APP_API;
+        const uri = "authentication/register";
         try {
-            const response = await axios.post(uri, user);
+            const response = await axios({method: "post", baseURL: baseUrl, url: uri, data: user});
             if(response.status != 201)
                 throw new Error("Something went wrong when registrating the user");
             props.switchForm();

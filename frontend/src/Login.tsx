@@ -13,9 +13,10 @@ export default function Login(props: loginProps){
     const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
     const loginUser = async (user: UserForLoginDto) => {
-        const uri = process.env.REACT_APP_API + "authentication/login";
+        const baseUrl: string = "" + process.env.REACT_APP_API;
+        const uri = "authentication/login";
         try {
-            const response = await axios.post(uri, user);
+            const response = await axios({method: 'post', baseURL: baseUrl , url: uri, data: user});
             if(response.status != 200)
                 throw new Error("Something went wrong when user authorizing");
             const token = response.data.token;

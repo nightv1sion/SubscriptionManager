@@ -48,13 +48,14 @@ export default function Main(props: homeProps){
     const getDataSubscriptions = async () => {
         if(isExpired)
           return;
-        let uri:string = "" + process.env.REACT_APP_API;
+        let baseUrl:string = "" + process.env.REACT_APP_API;
+        let url: string = "";
         if(props.selectedCategory)
-          uri += "categories/" + props.selectedCategory.id + "/subscriptions";
+          url += "categories/" + props.selectedCategory.id + "/subscriptions";
         else
-          uri += "subscriptions";
+          url += "subscriptions";
         try {
-          const response = await axios.get(uri);
+          const response = await axios({method: "get", baseURL: baseUrl, url: url});
           if(response.status != 200)
             throw new Error("Something went wrong when getting subscriptions from server");
           let data:SubscriptionDto[] = await response.data;
@@ -74,10 +75,11 @@ export default function Main(props: homeProps){
     const getDataCategories = async () => {
       if(isExpired)
           return;
+      const baseUrl: string = "" + process.env.REACT_APP_API; 
       const uri = process.env.REACT_APP_API + "categories";
   
       try {
-          const response = await axios.get(uri);
+          const response = await axios({method: "get", baseURL: baseUrl, url: uri});
           if(response.status != 200)
               throw new Error("Something went wrong when loading categories from server");
           let data = await response.data;
