@@ -46,7 +46,7 @@ export default function Main(props: homeProps){
     const closeForm = () => setSelectedSubscriptionForEdition(undefined);
 
     const getDataSubscriptions = async () => {
-        if(!isExpired)
+        if(isExpired)
           return;
         let uri:string = "" + process.env.REACT_APP_API;
         if(props.selectedCategory)
@@ -72,7 +72,7 @@ export default function Main(props: homeProps){
     }
 
     const getDataCategories = async () => {
-      if(!isExpired)
+      if(isExpired)
           return;
       const uri = process.env.REACT_APP_API + "categories";
   

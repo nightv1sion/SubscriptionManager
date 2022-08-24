@@ -39,9 +39,7 @@ namespace SubscriptionManager.Controllers
             if (!await _service.AuthenticationService.ValidateUser(userForAuthentication))
                 return Unauthorized();
 
-            var tokenDto = await _service.AuthenticationService.CreateToken(true);
-
-            return Ok(tokenDto);
+            return Ok(new { Token = await _service.AuthenticationService.CreateToken() });
         }
     }
 }

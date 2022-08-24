@@ -19,8 +19,8 @@ export default function Login(props: loginProps){
             if(response.status != 200)
                 throw new Error("Something went wrong when user authorizing");
             const token = response.data.token;
-            localStorage.setItem("token", token.accessToken);
-            setAuthToken(token.accessToken);
+            localStorage.setItem("token", token);
+            setAuthToken(token);
             navigate("/");
         }
         catch(err:any){

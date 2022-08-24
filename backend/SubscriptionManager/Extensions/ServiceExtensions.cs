@@ -91,8 +91,8 @@ namespace SubscriptionManager.Extensions
 
         public static void ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtSettings = configuration.GetSection("jwtSettings");
-            var secretKey = Environment.GetEnvironmentVariable("SECRET");
+            var jwtSettings = configuration.GetSection("JwtSettings");
+            var secretKey = jwtSettings["Key"];
 
             services.AddAuthentication(opt =>
             {
