@@ -19,7 +19,7 @@ namespace SubscriptionManager.Controllers
         [HttpGet]
         public async Task<IActionResult> GetSubscriptions()
         {
-            var subscriptions = await _service.SubscriptionService.GetSubscriptionsForUserAsync(User.Identity.Name,false);
+            var subscriptions = await _service.SubscriptionService.GetUncategorizedSubscriptionsForUserAsync(User.Identity.Name,false);
             return Ok(subscriptions);
         }
 

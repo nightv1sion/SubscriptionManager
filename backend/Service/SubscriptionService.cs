@@ -29,10 +29,10 @@ namespace Service
 
         
 
-        public async Task<IEnumerable<SubscriptionDto>> GetSubscriptionsForUserAsync(string username, bool trackChanges)
+        public async Task<IEnumerable<SubscriptionDto>> GetUncategorizedSubscriptionsForUserAsync(string username, bool trackChanges)
         {
             var user = await GetUserAndCheckIfItExists(username);
-            var subscriptionEntities = await _repository.Subscription.GetSubscriptionsForUserAsync(user, trackChanges);
+            var subscriptionEntities = await _repository.Subscription.GetUncategorizedSubscriptionsForUserAsync(user, trackChanges);
 
             var subscriptionsForReturn = _mapper.Map<IEnumerable<SubscriptionDto>>(subscriptionEntities);
             return subscriptionsForReturn;

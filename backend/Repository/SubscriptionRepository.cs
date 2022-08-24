@@ -11,14 +11,11 @@ namespace Repository
 {
     public class SubscriptionRepository : RepositoryBase<Subscription>, ISubscriptionRepository
     {
-        /*Task<ICollection<Subscription>> GetSubscriptionsForUserAsync(User user, bool trackChanges);
-        Task<ICollection<Subscription>> GetSubscriptionsForCategoryForUserAsync(User user, Guid categoryId, bool trackChanges);
-        Task<Subscription> GetSubscriptionByIdForUserAsync(User user, Guid id, bool trackChanges);*/
         public SubscriptionRepository(RepositoryContext context) : base(context)
         {
         }
-        public async Task<ICollection<Subscription>> GetSubscriptionsForUserAsync(User user, bool trackChanges) => 
-            await FindByCondition(s => s.UserId.Equals(user.Id),trackChanges).OrderBy(s => s.Name).ToListAsync();
+        public async Task<ICollection<Subscription>> GetUncategorizedSubscriptionsForUserAsync(User user, bool trackChanges) => 
+            await FindByCondition(s => s.UserId.Equals(user.Id) && s.CategoryId == null,trackChanges).OrderBy(s => s.Name).ToListAsync();
 
         public async Task<ICollection<Subscription>> GetSubscriptionsForCategoryForUserAsync(User user, Guid categoryId, bool trackChanges) =>
             await FindByCondition(c => c.UserId.Equals(user.Id) && c.CategoryId.Equals(categoryId), trackChanges).OrderBy(c => c.Name).ToListAsync();

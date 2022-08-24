@@ -9,7 +9,7 @@ namespace Service.Contracts
 {
     public interface ISubscriptionService
     {
-        Task<IEnumerable<SubscriptionDto>> GetSubscriptionsForUserAsync(string username, bool trackChanges);
+        Task<IEnumerable<SubscriptionDto>> GetUncategorizedSubscriptionsForUserAsync(string username, bool trackChanges);
         Task<IEnumerable<SubscriptionDto>> GetSubscriptionsForCategoryForUserAsync(string username, Guid categoryId, bool trackChanges);
         Task<SubscriptionDto> CreateSubscriptionForUserAsync(string username, SubscriptionForCreateDto subcriptionForCreate);
         Task<SubscriptionDto> GetSubscriptionByIdForUserAsync(string username, Guid id, bool trackChanges);

@@ -9,7 +9,7 @@ namespace Contracts
 {
     public interface ISubscriptionRepository
     {
-        Task<ICollection<Subscription>> GetSubscriptionsForUserAsync(User user, bool trackChanges);
+        Task<ICollection<Subscription>> GetUncategorizedSubscriptionsForUserAsync(User user, bool trackChanges);
         Task<ICollection<Subscription>> GetSubscriptionsForCategoryForUserAsync(User user, Guid categoryId, bool trackChanges);
         Task<Subscription> GetSubscriptionByIdForUserAsync(User user, Guid id, bool trackChanges);
         void CreateSubscription(Subscription subscription);
