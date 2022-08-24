@@ -8,3 +8,10 @@
 /* .maincontent{
     background-color: rgba(0, 0, 0, 5%);
 } */
+.maincontent--name {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 600;
+    color: #6100FF;
+    margin-bottom: 1%;
+}

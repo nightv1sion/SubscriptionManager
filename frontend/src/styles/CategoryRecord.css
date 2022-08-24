@@ -1,35 +1,24 @@
-
-.categoryrecord--box{
-    margin: auto;
+.category--record--btn {
+    width:100%;
     padding: 0;
-    padding-top: 3%;
-    padding-bottom: 0%;
-    font-size: 18px;
-    margin-top: 5%;
-    padding-bottom: 0.01%;
-    padding-left: 10%;
-    width: 80%;
-
 }
-.category--name{
-}
-
-.selected--category {
-    border-radius: 20px;
-}
-
-.selected--category {
-    background-color: rgba(0, 0, 0, 5%);
+.category--record--dropdown {
+    width: 100%;
     margin: auto;
-    margin-top: 5%;
-    padding-left: 10%;
-    padding-bottom: 0.01%;
+    /* text-align: center; */
 }
 
-.selected--category > p {
-    color: #2400FF;
+.category--record--toggle {
 }
 
-.selected--category > a {
-    color: #2400FF;
+.category--record { 
+    width: 80%;
+    margin: auto;
+    margin-top: 4%;
+}
+
+.category--record--wo--operations > button {
+    padding-top: 2%;
+    padding-bottom: 2%;
+
 }

@@ -11,5 +11,7 @@ namespace Entities.Models
     {
         public ICollection<Category>? Categories { get; set; }
         public ICollection<Subscription>? Subscriptions { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
     }
 }

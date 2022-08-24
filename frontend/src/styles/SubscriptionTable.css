@@ -62,7 +62,9 @@
 
 .subscription--table{
     overflow: auto;
-    height: 700px;
+    height: 900px;
+    position: relative;
+    padding-bottom: 5%;
 }
 
 .subscription--table::-webkit-scrollbar {
@@ -73,4 +75,8 @@
     -webkit-box-shadow: 5px 5px 5px -5px rgba(34, 60, 80, 0.2) inset;
     background-color: #f9f9fd;
     border-radius: 10px;
+}
+
+
+.subscriptions--not--completed{
 }

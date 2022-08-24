@@ -1,13 +1,10 @@
+import { Button } from "react-bootstrap";
 import "./styles/CategoryRecord.css";
 
 export default function NewCategoryRecord(props: newCategoryRecordProps){
-    return <div className = "categoryrecord--box">
-                <a href = "#" onClick = {(event) => event.preventDefault()}>
-                    <div className = "category--name">
-                        <p>{props.categoryName}</p>
-                    </div>
-                </a>
-            </div>
+    return <div className = "category--record category--record--wo--operations">
+            <Button variant = "outline-primary" className = "category--record--btn" >{props.categoryName}</Button>
+        </div>
 }
 
 interface newCategoryRecordProps {

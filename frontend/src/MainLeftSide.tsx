@@ -1,15 +1,15 @@
-import UserProfile from "./UserProfile";
+import UserLogin from "./UserLogin";
 import "./styles/MainLeftSide.css";
 import CategoryTable from "./CategoryTable";
 import { Category } from "./Interfaces";
+import UserProfile from "./UserProfile";
 export default function MainLeftSide(props: mainLeftSideProps){
+
     return (
         <>
-            <div className = "user--profile">
-                <UserProfile /> 
-            </div>
+            {props.userName ? <UserProfile updateEverything = {props.updateEverything} userName={props.userName} /> : <UserLogin /> }
             <div>
-                <CategoryTable setSelectedCategory={props.selectCategory}/>
+                <CategoryTable userName = {props.userName} getDataCategories = {props.getData} categories={props.categories} setSelectedCategory={props.selectCategory}/>
             </div>
         </>
     )
@@ -18,4 +18,8 @@ export default function MainLeftSide(props: mainLeftSideProps){
 interface mainLeftSideProps {
     selectedCategory?: Category;
     selectCategory: (category?: Category) => void; 
+    userName: string | undefined;
+    categories: Category[];
+    getData: () => void;
+    updateEverything: () => void;
 }

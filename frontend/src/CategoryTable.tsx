@@ -7,33 +7,17 @@ import { Category } from "./Interfaces";
 import NewCategoryRecord from "./NewCategoryRecord";
 import "./styles/CategoryTable.css";
 import FieldForCreation from "./FieldForCreation";
+import CategoryRecordWithoutOperations from "./CategoryRecordWithoutOperations";
 
 export default function CategoryTable(props: categoryTableProps){
     
-    const [categories, setCategories] = useState<Category[]>([]);
+    const [isCategoryEditing, setIsCategoryEditing] = useState<boolean[]>(new Array(props.categories.length).fill(false));
 
-    const [isCategoryEditing, setIsCategoryEditing] = useState<boolean[]>(new Array(categories.length).fill(false));
-
-    const [isCategorySelected, setIsCategorySelected] = useState<boolean[]>(new Array(categories.length).fill(false));
+    const [isCategorySelected, setIsCategorySelected] = useState<boolean[]>(new Array(props.categories.length).fill(false));
     
     const [nameOfNewCategory, setNameOfNewCategory] = useState<string | undefined>(undefined);
     
-    const getDataCategories = async () => {
-        const uri = process.env.REACT_APP_API + "categories";
     
-        try {
-            const response = await axios.get(uri);
-            if(response.status != 200)
-                throw new Error("Something went wrong when loading categories from server");
-            let data = await response.data;
-            
-            setCategories(data);
-    
-        }
-        catch(error: any) {
-            console.log(error.message);
-        }
-      }
 
     const PostNewCategory = async () => {
         const uri = process.env.REACT_APP_API + "categories";
@@ -53,9 +37,9 @@ export default function CategoryTable(props: categoryTableProps){
     }
 
     const updateData = async (name: string, index: number) => {
-        const uri = process.env.REACT_APP_API + "categories/" + categories[index].id;
+        const uri = process.env.REACT_APP_API + "categories/" + props.categories[index].id;
         try {
-            const response = await axios.put(uri, {id: categories[index].id, name: name});
+            const response = await axios.put(uri, {id: props.categories[index].id, name: name});
             if(response.status != 204)
                 throw new Error("Something went wrong when editing category");
         }
@@ -70,7 +54,7 @@ export default function CategoryTable(props: categoryTableProps){
     } 
 
     const DeleteData = async (index: number) => {
-        const uri = process.env.REACT_APP_API + "categories/" + categories[index].id;
+        const uri = process.env.REACT_APP_API + "categories/" + props.categories[index].id;
         try {
             const response = await axios.delete(uri);
             if(response.status != 204)
@@ -93,7 +77,7 @@ export default function CategoryTable(props: categoryTableProps){
     const handleCreateCategory = async () => {
         setNameOfNewCategory(undefined);
         await PostNewCategory();
-        await getDataCategories();
+        await props.getDataCategories();
     }
 
     const handleEditCategory = (index: number) => {
@@ -106,7 +90,7 @@ export default function CategoryTable(props: categoryTableProps){
     const confirmEditCategory = async (name: string, index: number) => {
         breakEditCategory(index);
         await updateData(name, index);
-        await getDataCategories();
+        await props.getDataCategories();
     }
 
     const breakEditCategory = (index: number) => {
@@ -122,7 +106,7 @@ export default function CategoryTable(props: categoryTableProps){
     const handleDeleteCategory = async (index:number) => {
         await DeleteData(index);
         selectCategory(-1);
-        await getDataCategories();
+        await props.getDataCategories();
     }    
 
     const selectCategory = (index: number) => {
@@ -136,21 +120,23 @@ export default function CategoryTable(props: categoryTableProps){
         }
         array[index] = true; 
         setIsCategorySelected(array);
-        props.setSelectedCategory(categories[index]);
+        props.setSelectedCategory(props.categories[index]);
     }
 
     useEffect(() => { 
-        const fetchData = async() => { await getDataCategories()}; 
+        const fetchData = async() => { await props.getDataCategories()}; 
         fetchData();
     }, []);
 
     return <>
         <div>
-            <FieldForCreation placeholder = {"Add a new category"} handleCreation={handleCreateCategory} handleText={handleCategoryText} breakCreation = {breakCreatingCategory}/>
+            <FieldForCreation userName = {props.userName} placeholder = {"Add a new category"} handleCreation={handleCreateCategory} handleText={handleCategoryText} breakCreation = {breakCreatingCategory}/>
         </div>
+        {props.userName ? 
         <div className = "category--table">
+            
             <div className = "">
-                {categories.map((c, index) => 
+                {props.categories.map((c, index) => 
                     isCategoryEditing[index] ? <EditingCategory key = {index} confirmEdit={confirmEditCategory} name = {c.name} index = {index} breakEditing = {breakEditCategory}/> 
                     : isCategorySelected[index] == true ? 
                         <CategoryRecord isSelected = {true} setSelectedCategory={selectCategory} key = {index} index = {index} categoryName = {c.name} handleEditCategory = {handleEditCategory} handleDeleteCategory = {handleDeleteCategory}/>
@@ -160,16 +146,21 @@ export default function CategoryTable(props: categoryTableProps){
             
             <div>
                 {isCategorySelected.findIndex(c => c == true) == -1 ?  
-                    <CategoryRecord isSelected = {true} setSelectedCategory={() => selectCategory(-1)} index = {-1} categoryName = {"Uncategorized"}/> : <CategoryRecord setSelectedCategory={() => selectCategory(-1)} index = {-1} categoryName = {"Uncategorized"}/>
+                    <CategoryRecordWithoutOperations isSelected = {true} setSelectedCategory={() => selectCategory(-1)} index = {-1} categoryName = {"Uncategorized"}/> :
+                     <CategoryRecordWithoutOperations setSelectedCategory={() => selectCategory(-1)} index = {-1} categoryName = {"Uncategorized"}/>
                 }
-                
             </div>
             { nameOfNewCategory ? <NewCategoryRecord categoryName={nameOfNewCategory} /> : <></>}
         </div>
-        
+         : <div className="category--empty--image--div"><img src = "empty.png" className = "empty--image"/>
+         <div className = "category--empty--text">It is empty</div><div className = "category--empty--text">Because you are not signed in</div></div> }
+
     </>
 }
 
 interface categoryTableProps {
+    categories: Category[];
+    getDataCategories: () => void;
     setSelectedCategory: (category: Category | undefined) => void;
+    userName: string | undefined;
 }

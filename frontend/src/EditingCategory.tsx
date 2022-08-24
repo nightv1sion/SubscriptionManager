@@ -20,8 +20,8 @@ export default function EditingCategory(props: editingCategoryProps){
     }
 
 
-    return <div>
-        <input autoFocus style = {{"width": "67%", "marginTop": "3%"}} onBlur = {handleBlur} onChange = {handleChange} onKeyDown={handleKeyDown} defaultValue={props.name} className = "form-control"/>
+    return <div style={{width: "80%", margin: "auto", marginTop: "4%"}}>
+        <input autoFocus onBlur = {handleBlur} onChange = {handleChange} onKeyDown={handleKeyDown} defaultValue={props.name} className = "form-control"/>
     </div>
 }
 interface editingCategoryProps {

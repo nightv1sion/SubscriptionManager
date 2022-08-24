@@ -14,7 +14,7 @@
 }
 
 .main--leftside {
-    /* height: 100vh; */
+    height: 100vh;
     border-right: 1px solid rgba(0, 0, 0, 20%);
 }
 

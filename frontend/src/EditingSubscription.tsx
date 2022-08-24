@@ -101,7 +101,9 @@ export default function EditingCategory(props: editingCategoryProps){
     }
 
     const handleDelete = async () => {
+        props.closeForm();
         await deleteSubscription();
+        
     }
 
 

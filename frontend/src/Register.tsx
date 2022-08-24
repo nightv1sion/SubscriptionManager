@@ -54,7 +54,7 @@ export default function Register(props: registerProps){
     }), onSubmit: handleFormikSubmit});
 
     return <>
-    <div style = {{width: "20%", margin: "auto", border: "1px solid blue", padding: "1% 1% 0.5% 1%", borderRadius: "5%", marginTop: "5%"}}>
+    <div style = {{width: "20%", margin: "auto", border: "1px solid blue", padding: "1% 1% 0.5% 1%", borderRadius: "5%", marginTop: "2%"}}>
         <form onSubmit = {formik.handleSubmit}>
             <div className = "text-center">
                 <h3>Register</h3>
@@ -67,15 +67,15 @@ export default function Register(props: registerProps){
             <input id = "email" name = "email" value = {formik.values.email} onChange = {formik.handleChange} className = "form-control"/>
             
             {formik.errors.password ? <label htmlFor = "password" className = "text-danger">Password is required</label> : <label htmlFor = "password">Password</label> }
-            <input id = "password" name = "password" value = {formik.values.password} onChange = {formik.handleChange} className = "form-control"/>
+            <input type = "password" id = "password" name = "password" value = {formik.values.password} onChange = {formik.handleChange} className = "form-control"/>
 
             {formik.errors.confirmPassword ? <label htmlFor = "confirmPassword" className = "text-danger">Confirm Password is required</label> : <label htmlFor = "confirmPassword">Confirm Password</label> }
-            <input id="confirmPassword" name = "confirmPassword" value = {formik.values.confirmPassword} onChange = {formik.handleChange} className = "form-control"/>
+            <input type = "password" id="confirmPassword" name = "confirmPassword" value = {formik.values.confirmPassword} onChange = {formik.handleChange} className = "form-control"/>
             <div className = "text-center mt-3">
                 <Button variant = "outline-primary" type="submit">Register</Button>
             </div>
             <div className = "text-center mt-3">
-                <a href = "#" onClick = {() => props.switchForm()} className="link-primary"><p>Already have an account</p></a>
+                <a href = "#" onClick = {(event) => { props.switchForm(); event.preventDefault()}} className="link-primary"><p>Already have an account</p></a>
             </div>
         </form>
     </div>

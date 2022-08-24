@@ -38,10 +38,10 @@ export default function SubscriptionRecord(props: subscriptionRecordProps){
                             <div className = "subscription--additionalinfo">
                                 <Row>
                                     {props.subscription.created ? <Col sm = {6}>
-                                        <div className = "subscription--dayspassed">{differenceBetweenDates(new Date(Date.now()), props.subscription.created)} Days Passed</div>
+                                        <div className = "subscription--dayspassed">🔴 {differenceBetweenDates(new Date(Date.now()), props.subscription.created)} Days Passed</div>
                                     </Col> : <></>}
                                     {props.subscription.endsAt  ? <Col sm = {6}>
-                                        <div className = "subscription-daysleft">{differenceBetweenDates(props.subscription.endsAt, new Date(Date.now()))} Days Left</div>
+                                        <div className = "subscription-daysleft">🟢 {differenceBetweenDates(props.subscription.endsAt, new Date(Date.now()))} Days Left</div>
                                     </Col> : <></>}
                                 </Row>
                             </div>

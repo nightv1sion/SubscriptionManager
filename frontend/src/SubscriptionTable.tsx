@@ -20,8 +20,11 @@ export default function SubscriptionTable(props: taskTableProps){
 
     const PostNewSubscription = async () => {
         let uri:string = "" + process.env.REACT_APP_API + "subscriptions";
-        let values = {name: nameOfNewSubscription, categoryId: props.category ? props.category.id : undefined};
+        let values;
         if(props.category)
+            values = {name: nameOfNewSubscription, categoryId: props.category.id};
+        else
+            values = {name: nameOfNewSubscription, categoryId: null};
         try {
           const response = await axios.post(uri, values);
           if(response.status != 201)
@@ -58,11 +61,11 @@ export default function SubscriptionTable(props: taskTableProps){
     const [isInputVisible, setIsInputVisible] = useState<boolean>(false);
     
     return <>
-    <div className = "subscription--table">
 
         <div className = "subscriptiontable--fieldforcreation">
-        <FieldForCreation placeholder = {"Add a new subscription"} style = {{margin: "1% 1% 1% 1%"}} handleText={(value: string) => { setNameOfNewSubscription(value); } } handleCreation={handleCreate} breakCreation={breakCreation}/>
+        <FieldForCreation userName = {props.userName} placeholder = {"Add a new subscription"} style = {{margin: "1% 1% 1% 1%"}} handleText={(value: string) => { setNameOfNewSubscription(value); } } handleCreation={handleCreate} breakCreation={breakCreation}/>
         </div>
+    <div className = "subscription--table">
         
         {nameOfNewSubscription ? <div className = "subscriptiontable--newsubscription">
             <div className = "subscription--record">
@@ -80,11 +83,13 @@ export default function SubscriptionTable(props: taskTableProps){
             </div> 
         </div> : <></>}
         
-        {props.subscriptions.length > 0 ? <div>
+        
+
+        {props.subscriptions.length > 0 ? <div className = "subscriptions--not--completed">
             {props.subscriptions.filter(s => s.endsAt == undefined || s.endsAt > new Date()).map((value, index) => {
                 return <SubscriptionRecord index = {index} selectedSubscription={props.selectedSubscription && props.selectedSubscription == value ? true : false} setSelectedSubscription = {(subscription: Subscription | undefined) => {props.setSelectedSubscription(subscription);}} key = {index} subscription = {value} getData = {props.getDataSubscriptions}/>
             })}
-        </div> : <div className="empty--image--div"><img src = "empty.png" className = "empty--image"/><div className = "empty--text">It is empty</div></div>}
+        </div> : <div className="empty--image--div"><img src = "empty.png" className = "empty--image"/><div className = "empty--text">It is empty</div> {props.userName ? <div className = "empty--text">You can create a new Subscription using input form above this text</div> : <div className = "empty--text">Because you are not signed in</div>}</div>}
 
         
         
@@ -111,6 +116,7 @@ export default function SubscriptionTable(props: taskTableProps){
 }
 
 interface taskTableProps {
+    userName: string | undefined
     category?: Category;
     setSelectedSubscription: (subscription: Subscription | undefined) => void;
     selectedSubscription: Subscription | undefined;
