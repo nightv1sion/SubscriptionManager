@@ -1,7 +1,7 @@
 # SubscriptionManager - is a web application that allows you to keep information about all your subscriptions in one place.
 
 https://nightvision-subscription-manager.vercel.app/
-
+# Technologies
 ![image](https://user-images.githubusercontent.com/92179208/186512619-00bed7fe-1caa-46bd-aa3b-0599ef74ccae.png)
 
 
