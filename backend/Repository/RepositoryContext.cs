@@ -14,6 +14,7 @@ namespace Repository
     {
         public RepositoryContext(DbContextOptions options) : base(options)
         {
+            base.Database.EnsureCreated();
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {

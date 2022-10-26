@@ -1,39 +1,27 @@
-version: '3.4'
-services: 
-  api: 
+version: "3.9"
+services:
+  web-app:
     build: 
-      context: "/backend/SubscriptionManager"
+      context: backend
       dockerfile: Dockerfile
-    container_name: "api"
-    ports: 
-      - "5000:5000"
-      - "5001:5001"
-    depends_on:
-      - db
-      - db-migrations
-    networks:
-      - app-network
-  db: 
-    build:
-      context: "/db"
-    container_name: "db"
+    ports:
+      - "8000:80"
+      - "443:443"
+    container_name: "SubscriptionManager"
     environment:
-      SA_PASSWORD: "subman123"
-      ACCEPT_EULA: "Y"
-    ports: 
-      - "1433:1433"
-    networks:
-      - app-network
-  db-migrations:
-    build:
-      context: "/db/migrations"
-    container_name: "db_migrations"
-    volumes: 
-      - ./db/migrations:/flyway/sql
-    networks:
-      - app-network
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=N1ghtv1s1on!
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/subscriptionmanager.pfx 
+    volumes:
+      - ./backend/conf.d/https:/https:ro
     depends_on:
-      - db
-networks:
-  app-network:
-    driver: bridge
+      - db 
+  db:
+    image: "mcr.microsoft.com/mssql/server"
+    environment:
+      SA_PASSWORD: "Your_password123"
+      ACCEPT_EULA: "Y"
+    container_name: db
+    ports:
+      - "1433:1433"

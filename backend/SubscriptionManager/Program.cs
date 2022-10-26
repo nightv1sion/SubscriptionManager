@@ -1,5 +1,7 @@
 using Contracts;
+using Microsoft.EntityFrameworkCore;
 using NLog;
+using Repository;
 using SubscriptionManager;
 using SubscriptionManager.Extensions;
 using SubscriptionManager.Helper;
@@ -25,6 +27,9 @@ builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
 
 var app = builder.Build();
+
+
+
 var logger = app.Services.GetRequiredService<ILoggerManager>();
 app.ConfigureExceptionHandler(logger);
 
@@ -43,5 +48,16 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<RepositoryContext>();
+    if (context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+}
 
 app.Run();
