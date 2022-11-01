@@ -6,6 +6,7 @@ RUN for file in $(ls *.csproj); do mkdir -p ./${file%.*}/ && mv $file ./${file%.
 WORKDIR /home/app/SubscriptionManager/
 RUN dotnet restore
 COPY . .
+RUN dotnet test ./Tests/Tests.csproj
 RUN dotnet publish ./SubscriptionManager/SubscriptionManager.csproj -o /publish/
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /publish
