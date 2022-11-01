@@ -9,7 +9,7 @@ is a web application that allows you to keep information about all your subscrip
          
          dotnet dev-certs https --clean
          
-         dotnet dev-certs https -ep ./backend/conf.d/https/subscriptionmanager.pfx -p N1ghtv1s1on!
+         dotnet dev-certs https -ep ./backend/conf.d/https/subscriptionmanager.pfx -p SomePassword123!
          
          dotnet dev-certs https --trust
          
