@@ -11,7 +11,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ASPNETCORE_Kestrel__Certificates__Default__Password=N1ghtv1s1on!
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=SomePassword123!
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/subscriptionmanager.pfx 
     volumes:
       - ./backend/conf.d/https:/https:ro
