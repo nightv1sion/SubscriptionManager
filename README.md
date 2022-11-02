@@ -31,4 +31,5 @@ is a web application that allows you to keep information about all your subscrip
 - To Edit and Delete - Click an existing subscription and press Edit or Delete button in pop-up form
 
 # Technologies
-![image](https://user-images.githubusercontent.com/92179208/199545417-f90ede61-3d05-4452-b64d-55e0b06a2837.png)
+![Upgraded Subman Technologies (1)](https://user-images.githubusercontent.com/92179208/199547779-e3113d60-a6a3-4df9-a7d5-55ecbca6c867.png)
+
