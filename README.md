@@ -30,5 +30,5 @@ is a web application that allows you to keep information about all your subscrip
 - To Create - Click 'Add a new subscription' input form and start typing name, press "Enter" to save Category (Enter start, end dates and price in pop-up form)
 - To Edit and Delete - Click an existing subscription and press Edit or Delete button in pop-up form
 
-# Technologies (+ Docker + Unit Tests (xUnit, FakeItEasy, FluentAssertions))
-![image](https://user-images.githubusercontent.com/92179208/186512619-00bed7fe-1caa-46bd-aa3b-0599ef74ccae.png)
+# Technologies
+![image](https://user-images.githubusercontent.com/92179208/199545417-f90ede61-3d05-4452-b64d-55e0b06a2837.png)
